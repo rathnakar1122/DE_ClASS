@@ -1,0 +1,132 @@
+what is airflow:
+A plotform created by community programatically author, schedule and monitor workflows
+  --> it's a job scheduler that run your task by obligating their execution dependencies 
+  --> workflows are written as code in the form of Direct acyclic graph 
+  --> since workflow return in Dags, So they became more dynamic , manageble , and testable , and collaberative 
+  --> devloped in python so capable to interface with any third party python API can be callable execute and endless variety of tasks irrespective of there languages 
+
+ETL: extract and transform and Load
+conventional problems: error handling , change to traceble , and monitoring and exection denpendencies
+
+Benefits of Airflow:
+  Dynamic:
+    --> Dags are written in completedly in dynamic mode in nature , airflow pipeline is configured in python. Allowing you for pipeline generation and hence giving us full control over it.
+  Scalable:
+    --> Airflow is highly scalable and can be used to run hundreds of tasks in a pipeline. It can also be used to run multiple pipelines in parallel.
+  Extensible:
+    --> Airflow is highly extensible and can
+    --> be used to run tasks written in any language.
+  configerable:
+    --> Airflow is highly configurable and can be used to run tasks written in any language.
+
+
+
+Basic terminalogy in Airflow:
+  1. Dag : Directed Acylic Graph --> collection of all the tasks you want to run , along with all the dependencies
+  2. Task : Task is a operator that defines a single unit of work in workflow
+  3. Operator : An Operator represents task in a single workflow that helps to carry out your task operation determine that what actually gets to be Done when your Dag runs 
+  4. workflow : a worklflow is a collection of tasks that you want to run in a partucular order
+
+Airflow Architecture:
+  1.metadata : metadata database stores credentials, connections, history, and configuration
+  2. scheduler : the scheduler is responsible for scheduling the task instances
+  3. web server : the web server is responsible for rendering the web UI
+  4. executor : the executor is responsible for running the task instances
+  5. worker : the worker is responsible for running the task instances that the executor triggers
+  6. queueing system : the queueing system is responsible for queuing the task instances
+
+
+what are the Operator:
+An Operator in Single task in a workflow. Dags only describe How to run a workflow and they do not perform any actual computation
+
+sensor Operator :  sensor Operators are keep executing at time interval, they successed when a critiries is met and fail when they timeout
+  --> example : FileSensor, HttpSensor, SqlSensor, etc
+  --> FileSensor : it will check the file is present or not
+  --> HttpSensor : it will check the http request is successed or not
+  --> SqlSensor : it will check the sql query is successed or not
+
+Trasfer Operator : Trasnfor Operator moves the Data from one system/ location to another
+  --> example : S3ToRedshiftOperator, S3ToHiveOperator, etc
+  --> S3ToRedshiftOperator : it will move the data from S3 to Redshift
+  --> S3ToHiveOperator : it will move the data from S3 to Hive
+
+action operator :  action operators are the used to perform an action or you can say they act as triggers to certain action 
+  --> example : BashOperator, PythonOperator, etc
+  --> BashOperator : it will execute the bash command
+  --> PythonOperator : it will execute the python code
+
+and we have prebuild operations and custom operations:
+  --> prebuild operations : prebuild operations are the operations that are already available in the airflow
+  --> custom operations : custom operations are the operations that are created by the user
+
+what is Dummy Operator :
+  --> Dummy Operator is built in operator used as a placeHolder In A DAG(Dyrect acyclic Graph ). It performs no operations and simply acts as a maker in the workflow.
+
+Hooks in Airflow: 
+ --> A hook is an object that embodies a connections to a remote sever ,service as plotform 
+ --> Allow you to interact with extarnal plotforms and Databse like Hive , S3 , Mysql, postgre, HDFC, and ping without using there built in operators
+ --> Hooks impliment Common interface when possible and act as building block for operators 
+ --> used the airflow connection models to retrive hostnames and authentication information
+
+
+=====================================================================================================================:
+######################################################################################################################:
+
+
+
+
+What is Data PIpeline :
+ --> Data Pipeline Genarally COnsist of Several Tasks or actions that need to be executed to achive the desired result
+
+Use-cases: Extract --> transform --> and Load
+Machine_learning Pipelines
+Delivary Data to external system
+
+airflow is like Corn but much more powerfull:
+   --> dependencies between the tasks
+   --> monitoring 
+    --> logging
+
+what is task, why orchastration is required:
+ extract RAW_Data --> process RAW_Data --> Load processed Data.
+
+what is Airflow :
+  --> Airflow is a plorform to programatically author, schedule and monitor workflows 
+what is Google cloud composer:
+  --> Google cloud composer is a fully managed workflow orchestration service that empowers you to author, schedule and monitror pipelines that span across clouds and on-premises data centers.
+
+
+what is Dag:
+ every workflow defines as a direct acyclic graph 
+ A Dag defines serious of tasks to perform something 
+ The task can be directional dependenciess between the tasks
+
+what is task:
+ --> A task is a specific action or operation to be performed
+ --> A task is a unit of work in a worlflow 
+ --> for example query a scale table or exporting data
+ --> The operators and sensros operates the work 
+
+what is branching :
+ --> Sometimes you need a workflow to branch, or only go down a certain path based on arbitaty condtion whcih is typically related to somthing that heppend an upstream task 
+ --> one way to do this is by using the branch python Operator 
+
+
+
+
+Kuberneties:
+what is Docker:
+  --> Docker are container of packaging software 
+  --> all of applications code libraries , and dependencies are packed together in the container 
+
+
+
+
+
+
+
+
+
+
+
+
