@@ -1,0 +1,137 @@
+*************************:
+ GCP Data Engineer - Demo:
+*************************: 
+
+Evening Session: Querying in MySQL, BigQuery, Redshift, RDS and Athena[Analytical Query]
+â€¢	Objective: Learn SQL syntax variations across database systems.
+    â€¢	Topics Covered:
+        o	Basic query differences among MySQL(Cloud SQL, RDS), BigQuery, Redshift, and Athena.
+        o	DDL operations and basic querying in these platforms.
+o	Hands-on: Practice basic queries in each system.
+
+*********:
+Redshift:
+*********:
+SQL DDL Statements:
+--------------------
+CREATE, ALTER, DROP:
+---------------------
+
+>> Redshift Serverless:
+------------------------
+@ Cluster[PRE-DEFINED COMPUTE RESOURCES]
+@ Serverless
+@ Namespace
+@ Workgroup
+@ Database
+@ Schema
+@ Table - CREATE, ALTER AND DROP
+@ View
+@ Function
+
+
+scalability:
+------------
+Vertical -- Machine10gb/Robo10gb - Mach100gb/Robo100gb - Anjaneya Swamy - Vertical 
+Horizental -- Machine/Robo - 100Mch/100Robo - Robo - 100 robos
+
+MySQL, RDS, Cloud SQL, BigQuery(Architecture), Redshift(Architecture) >> Datatypes:(IMP):
+
+Cluster (Pre-defined Compute Resources):
+@ A Redshift Cluster is a collection of one or more compute nodes.
+@ It contains pre-defined resources like CPUs, memory, and storage.
+@ All nodes in a cluster work together to process queries. 
+@ The cluster includes a leader node and one or more compute nodes.
+
+
+Serverless:[AWS-RS,GCP-BQ]:
+@ Redshift Serverless eliminates the need to manage infrastructure.
+@ It allows users to run analytics without configuring or managing clusters.[dremel]*
+@ AWS automatically provisions resources based on the workload, ensuring scalability and cost efficiency.
+
+
+Namespace Info:
+@ Namespace is a collection of database objects and users. 
+@ Data properties include database name and password, permissions, and encryption and security.
+@ A namespace in Redshift Serverless isolates resources (databases, users, and workgroups).
+@ It acts as a boundary for managing access to Redshift resources.
+
+
+Workgroup Info:[COMPUTE ENGINES/compute resources]:[aws CLOUD]:
+@ Workgroup is a collection of compute resources from which an endpoint is created. 
+@ Compute properties include network and security settings.
+@ A workgroup defines a set of compute resources and connection properties for Redshift Serverless.
+@ It determines how a namespace is accessed and managed, including scaling configurations and permissions.
+
+
+Database:[Project]:
+A Redshift Database is a logical container that stores schema, tables, views, and functions.
+It organizes data and provides an environment for SQL operations.
+
+create database test;
+
+Schema:[Dataset]:
+@ A schema is a namespace within a Redshift database.
+@ It organizes tables, views, and other database objects.
+@ It helps avoid name conflicts and improves manageability of large databases.
+
+create schema test.non_public;
+
+
+Table - Create, Alter, and Drop:
+    A table is a structured set of data in rows and columns.
+    DDL Family:
+        CREATE: Defines a new table with specific columns and data types.
+        
+        create table test.non_public.customer_info(
+            customer_id int,
+            cusotmer_name varchar(100)
+            )
+            
+            
+        ALTER: Modifies an existing table by adding, changing, or removing columns.
+        DROP: Deletes a table and all its data permanently.
+    
+    DML Family:
+        INSERT:
+        
+        insert into test.non_public.customer_info(customer_id, cusotmer_name)
+        values (12, 'Raja');
+        
+        SELECT:
+        
+        select * from test.non_public.customer_info;
+        
+
+View:
+    @ A view is a virtual table created by a query.
+    @ It does not store data physically but provides a way to access specific data subsets.
+    @ Views simplify complex queries and enhance data security by restricting access to underlying tables.
+
+Function:
+    @ A function in Redshift is a reusable piece of SQL code.
+    @ It can be used to perform operations like calculations or data transformations.
+    @ Functions can be user-defined (UDFs) or system-defined.
+
+
+Stored Procedure:
+   @ running multiple sql statements 
+   
+   
+Questions:
+-----------
+What is IAM?:
+
+
+Redshift:
+---------
+https://docs.aws.amazon.com/pdfs/redshift/latest/dg/redshift-dg.pdf#c_high_level_system_architecture
+
+https://docs.aws.amazon.com/redshift/latest/dg/c_high_level_system_architecture.html
+
+
+Observations:
+--------------
+Field	        Type	                NL	    CMP
+customer_id	    integer	                NULL	az64
+cusotmer_name	character varying(100)	NULL	lzo

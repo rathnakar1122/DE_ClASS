@@ -1,0 +1,159 @@
+*************************:
+ GCP Data Engineer - Demo:
+*************************: 
+
+Evening Session: Querying in MySQL, BigQuery, Redshift, RDS and Athena[Analytical Query]
+â€¢	Objective: Learn SQL syntax variations across database systems.
+    â€¢	Topics Covered:
+        o	Basic query differences among MySQL(Cloud SQL, RDS), BigQuery, Redshift, and Athena.
+        o	DDL operations and basic querying in these platforms.
+o	Hands-on: Practice basic queries in each system.
+
+----------
+:BigQuery:
+----------
+DDL SQL Commands:
+-----------------
+    - CREATE - ALTER - DROP - TRUNCATE - RENAME 
+    
+MySQL:
+------
+BigQuery:
+---------
+    - Dataset Creation is mandatory in order to load the data into bigquery storage 
+    - Dataset can be created either in single region or in multi-region
+    - We need to create table resource 
+    
+DATASET CREATION SQL COMMAND:
+----------------------------
+CREATE SCHEMA PROJECT_ID.DATASET_ID;
+
+TABLE  CREATION SQL COMMAND:
+---------------------------
+CREATE TABLE PROJECT_ID.DATASET_ID.TABLE_ID(
+    COLUMN_NAME DATATYPE CONSTRAINT/MODE KEYS DEFAULT DESCRIPTION
+)
+@ Creation of customer_info table:
+
+CREATE TABLE example3_dataset.cutomer_info(
+  customer_id INT64 not null options(description='It is the cusotmer identification number')
+)
+
+@ Creation of orders table:
+
+CREATE OR REPLACE TABLE example3_dataset.orders(
+  order_id INT64 NOT NULL OPTIONS(DESCRIPTION='Unique instructor identifier, automatically incremented'), 
+  customer_id INT64 options(description='It is the cusotmer identification number')
+)
+
+DROP SQL STATEMENTS:
+--------------------
+DROP SCHEMA PROJECT_ID.DATASET_ID;
+DROP TABLE PROJECT_ID.DATASET_ID.TABLE_ID;
+
+ALTER SQL COMMANDS:
+--------------------
+1. ALTER TABLE ADD COLUMN statement:
+
+Syntax
+
+
+ALTER TABLE table_name
+ADD COLUMN [IF NOT EXISTS] column [, ...]
+
+ALTER TABLE example3_dataset.cutomer_info
+  ADD COLUMN customer_name STRING,
+  ADD COLUMN IF NOT EXISTS customer_phone_no int64, 
+  ADD COLUMN dob DATE OPTIONS(description="it is the date on which the customer was born")
+  
+2. ALTER TABLE ADD PRIMARY KEY statement:
+
+ALTER TABLE [[project_name.]dataset_name.]table_name
+ADD PRIMARY KEY(column_list) NOT ENFORCED;
+
+
+ALTER TABLE example3_dataset.cutomer_info 
+ADD PRIMARY KEY(customer_id) NOT ENFORCED;
+
+CREATE TABLE example3_dataset.orders 
+ADD PRIMARY KEY(order_id) NOT ENFORCED;
+
+
+2. ALTER TABLE ADD FOREIGN KEY statement:
+
+ALTER TABLE [[project_name.]dataset_name.]fk_table_name
+ADD [CONSTRAINT [IF NOT EXISTS] constraint_name] FOREIGN KEY (fk_column_name[, ...])
+REFERENCES pk_table_name(pk_column_name[,...]) NOT ENFORCED
+[ADD...]; 
+
+
+ALTER TABLE example3_dataset.orders 
+ADD CONSTRAINT customer_id FOREIGN KEY (customer_id) REFERENCES cutomer_info(customer_id) NOT ENFORCED
+
+ALTER TABLE example3_dataset.orders 
+ADD PRIMARY KEY(order_id) NOT ENFORCED,
+ADD FOREIGN KEY (customer_id) REFERENCES example3_dataset.cutomer_info(customer_id) NOT ENFORCED
+
+INSERT SQL STATEMENTs:
+-----------------------
+
+MySQL:
+example3_dataset.orders PK FK
+example3_dataset.customer_info PK
+
+BQ:
+example3_dataset.orders PK FK - documentation purpose 
+example3_dataset.customer_info PK
+
+document is provided for insert statements:
+
+
+
+Assignemnt1:
+------------
+Table info:
+
+Table ID - pacific-ethos-441506-a1.example3_dataset.cutomer_info
+Created - Nov 20, 2024, 8:02:00â€¯AM UTC+5:30
+Last modified - Nov 20, 2024, 8:09:01â€¯AM UTC+5:30
+Table expiration - NEVER
+Data location - US
+Default collation - 
+Default rounding mode - ROUNDING_MODE_UNSPECIFIED 
+Case insensitive - false
+Description - 
+Labels - 
+Primary key(s) - customer_id  
+Tags - 
+
+
+
+Storage info:
+Number of rows 
+Total logical bytes 
+Active logical bytes 
+Long term logical bytes 
+Current physical bytes 
+Total physical bytes 
+Active physical bytes 
+Long term physical bytes 
+Time travel physical bytes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

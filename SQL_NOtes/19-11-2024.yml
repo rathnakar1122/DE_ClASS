@@ -1,0 +1,207 @@
+*************************:
+ GCP Data Engineer - Demo
+*************************: 
+
+Evening Session: Querying in MySQL, BigQuery, Redshift, RDS and Athena[Analytical Query]
+â€¢	Objective: Learn SQL syntax variations across database systems.
+    â€¢	Topics Covered:
+        o	Basic query differences among MySQL(Cloud SQL, RDS), BigQuery, Redshift, and Athena.
+        o	DDL operations and basic querying in these platforms.
+o	Hands-on: Practice basic queries in each system.
+
+----------
+:BigQuery:
+----------
+Datasets Creation:
+------------------
+1. It is mandatory to have a dataset in bigquery if you wanna create any resource like table, view, ml model etc
+
+1.Using the Google Cloud console:From User Interface:
+
+2.Using a SQL query.:
+    - MySQL - create database database-name;:
+    - BigQuery - Use the CREATE SCHEMA statement.:
+        -- CREATE SCHEMA PROJECT_ID.DATASET_ID
+        -- CREATE SCHEMA pacific-ethos-441506-a1.example3_dataset;:
+        
+        
+Table Creation:
+---------------
+1.Using the Google Cloud console:From User Interface:
+2.Using a SQL query.:
+    - MySQL - create table table-name(
+            column-name datatype constraints
+        );
+    - BigQuery - Use the CREATE TABLE statement.:
+        -- CREATE TABLE example3_dataset.order_table ( 
+            order_id integer,
+            order_name string,
+            order_details string,
+            order_date date
+            );
+            
+            
+            
+Assignment/Task:
+-----------------
+Creating the datasets and tables in bigquery using - Console and SQL:
+- Dataset1
+- Tables-6
+
+
+Ref Documents:
+---------------
+https://cloud.google.com/bigquery/docs/resource-hierarchy
+
+https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy
+
+https://cloud.google.com/bigquery/docs/datasets-intro
+
+https://cloud.google.com/bigquery/docs/datasets#sql
+
+https://cloud.google.com/bigquery/docs/tables#sql
+
+https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_table_statement
+
+
+SQL Scripts:
+-------------
+Datatypes in MySQL Servers:
+
+
+Datatypes for BigQuery:
+-----------------------
+Numeric types:
+---------------	
+A numeric value. Several types are supported.
+
+A 64-bit integer.
+    SQL type name: INT64(bigquery) 
+    SQL aliases: INT, SMALLINT, INTEGER, BIGINT, TINYINT, BYTEINT
+        RDMS: Cloud --> Machine, Configuration - RAM, Memory -- Machine - 1 hour -- Charges
+    
+    
+Integer type:
+Integers are numeric values that do not have fractional components.:
+
+    Name	Range:
+    INT64 	-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807:
+    INT, SMALLINT, INTEGER, BIGINT, TINYINT, and BYTEINT are aliases for INT64.:
+
+INT64	8 logical bytes:9,223,372,036,854,775,807:
+                       :1:
+                       
+        House Constrution: 8 Rooms: 4 people stay: 32 peopale stay:
+                         : Parents + 2 people == 4 people : 7 roomls are idle
+
+department_id, department_name:
+1, 8lb       , raja - 2+size  - match - physical bytes charges apply - option
+2, 8lb       , roje - 2+size  - match - Physical bytes charges apply - option 
+
+9,223,372,036,854,775,807, roja 
+
+
+String type:
+
+Variable-length character data.
+SQL type name: STRING
+
+STRING	2 logical bytes + the UTF-8 encoded string size:
+
+
+
+Create table script for bigquery:
+--------------------------------
+department_table:
+
+CREATE TABLE pacific-ethos-441506-a1.STUDENTS.departments(
+      department_id int64 not null,
+      department_name string,
+      location string,
+      PRIMARY KEY ( department_id) NOT ENFORCED
+      )
+      
+instructors_table:
+
+CREATE TABLE pacific-ethos-441506-a1.STUDENTS.instructors (
+    instructor_id INT64 NOT NULL,
+    first_name STRING NOT NULL,
+    last_name STRING NOT NULL,
+    email STRING NOT NULL,
+    department_id INT64, -- Include department_id for the foreign key reference
+    PRIMARY KEY ( instructor_id) NOT ENFORCED,
+    FOREIGN KEY (department_id) REFERENCES pacific-ethos-441506-a1.STUDENTS.departments(department_id) NOT ENFORCED
+);
+
+
+-- FOREIGN KEY (col_name) REFERENCES dataset.table(col_name) NOT ENFORCED
+Error:
+Enforcement of primary keys is not supported in Bigquery - Becaz - It is an OLAP platform:
+
+Why BQ does not support Keys Directly:
+---------------------------------------
+    1. Denormalized Data Model:
+        - Data flattened table for better performance
+        - We run analytical queries 
+        - In Analytical  queries - we do not use primary keys and foreign keys - 
+        
+    2. Large scale data processing:
+        - As it is Analytical Engine, it priortiizes fast, large-scale data processing
+        
+    3. Distributed Architecture:
+        - Enforcing constraints in a distributed, columnar architecture  would impact query peformance.
+        - Enforcing constraints slows down data loading and querying .
+        
+CREATE TABLE statement:
+========================
+
+CREATE [ OR REPLACE ] [ TEMP | TEMPORARY ] TABLE [ IF NOT EXISTS ]
+table_name
+[(
+  column | constraint_definition[, ...]
+)]
+
+
+CREATE TABLE mydataset.myclusteredtable
+(
+  customer_id STRING,
+  transaction_amount NUMERIC
+)
+PARTITION BY DATE(_PARTITIONTIME)
+CLUSTER BY
+  customer_id
+OPTIONS (
+  partition_expiration_days=3,
+  description="a table clustered by customer_id"
+)
+
+Mode	Description
+Nullable	Column allows NULL values (default)
+Required	NULL values are not allowed
+Repeated	Column contains an array of values of the specified type
+      
+Car Parking:
+    - 1 car 100
+    - 2 cars 200
+    
+    
+Cloud Service Provide:
+-----------------------
+
+Restaurent:
+-----------
+ 800 - 1400 - unlimited
+ 1 biryani - amount - bowl - content - 300
+ 2 
+
+Auto Increment:
+---------------
+MySQL: Cloud SQL, RDS - RDBMS - Transactinal Servers --> migrate to ---> OLAP (bigquery, redshift)
+
+
+Analysis Task:
+--------------
+Step1: Create a table
+Step2: Insert Few records
+Step3: Rewrite the table schama - Create or replace - Table name
+Step4: The Data Effect:

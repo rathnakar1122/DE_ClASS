@@ -1,0 +1,142 @@
+GCP Data Engineer Course:
+*********: 
+--------------------------
+DATE - 7:40 AM 12/10/2024:
+--------------------------
+
+:SQL PRACTICE:
+
+
+SQL-Q3: User Activity for the Past 30 Days I
+-------
+Table: Activity
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| user_id       | int     |
+| session_id    | int     |
+| activity_date | date    |
+| activity_type | enum    |
++---------------+---------+
+
+    @ This table may have duplicate rows.
+    @ The activity_type column is an ENUM (category) of type ('open_session', 'end_session', 'scroll_down', 'send_message').
+    @ The table shows the user activities for a social media website. 
+    @ Note that each session belongs to exactly one user.
+ 
+
+Write a solution to find the daily active user count for a period of 30 days ending 2019-07-27 inclusively. A user was active on someday if they made at least one activity on that day.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Activity table:
++---------+------------+---------------+---------------+
+| user_id | session_id | activity_date | activity_type |
++---------+------------+---------------+---------------+
+| 1       | 1          | 2019-07-20    | open_session  |
+| 1       | 1          | 2019-07-20    | scroll_down   |
+| 1       | 1          | 2019-07-20    | end_session   |
+| 2       | 4          | 2019-07-20    | open_session  |
+| 2       | 4          | 2019-07-21    | send_message  |
+| 2       | 4          | 2019-07-21    | end_session   |
+| 3       | 2          | 2019-07-21    | open_session  |
+| 3       | 2          | 2019-07-21    | send_message  |
+| 3       | 2          | 2019-07-21    | end_session   |
+| 4       | 3          | 2019-06-25    | open_session  |
+| 4       | 3          | 2019-06-25    | end_session   |
++---------+------------+---------------+---------------+
+Output: 
++------------+--------------+ 
+| day        | active_users |
++------------+--------------+ 
+| 2019-07-20 | 2            |
+| 2019-07-21 | 2            |
++------------+--------------+ 
+Explanation: Note that we do not care about days with zero active users.
+
+
+
+SCHEMA:
+-------
+BQ:
+
+Create table If Not Exists pacific-ethos-441506-a1.sql_practice.Activity (
+	user_id int, 
+	session_id int, 
+	activity_date date, 
+	activity_type ENUM('open_session', 'end_session', 'scroll_down', 'send_message')
+	);
+
+Truncate table pacific-ethos-441506-a1.sql_practice.Activity;
+
+
+insert into pacific-ethos-441506-a1.sql_practice.Activity (user_id, session_id, activity_date, activity_type) values ('1', '1', '2019-07-20', 'open_session'),
+	(1, 1, '2019-07-20', 'scroll_down') ,
+	(1, 1, '2019-07-20', 'end_session') ,
+	(2, 4, '2019-07-20', 'open_session'),
+	(2, 4, '2019-07-21', 'send_message'),
+	(2, 4, '2019-07-21', 'end_session') ,
+	(3, 2, '2019-07-21', 'open_session'),
+	(3, 2, '2019-07-21', 'send_message'),
+	(3, 2, '2019-07-21', 'end_session') ,
+	(4, 3, '2019-06-25', 'open_session'),
+	(4, 3, '2019-06-25', 'end_session')
+
+
+
+Assignment/Task:
+	
+MYSQL Script:
+	
+Create table If Not Exists  Activity (
+	user_id int, 
+	session_id int, 
+	activity_date date, 
+	activity_type ENUM('open_session', 'end_session', 'scroll_down', 'send_message')
+	);
+
+BigQuery Script:
+
+CREATE TABLE IF NOT EXISTS pacific-ethos-441506-a1.sql_practice.Activity (
+  user_id INT64,                           -- BigQuery's equivalent of 'int'
+  session_id INT64,                        -- BigQuery's equivalent of 'int'
+  activity_date DATE,                      -- 'date' is the same in BigQuery
+  activity_type STRING,                    -- Replaces ENUM with STRING type 
+);
+
+
+INSERT INTO pacific-ethos-441506-a1.sql_practice.Activity (user_id, session_id, activity_date, activity_type)
+VALUES 
+  (1, 1, DATE('2019-07-20'), 'open_session'),
+  (1, 1, DATE('2019-07-20'), 'scroll_down'),
+  (1, 1, DATE('2019-07-20'), 'end_session'),
+  (2, 4, DATE('2019-07-20'), 'open_session'),
+  (2, 4, DATE('2019-07-21'), 'send_message'),
+  (2, 4, DATE('2019-07-21'), 'end_session'),
+  (3, 2, DATE('2019-07-21'), 'open_session'),
+  (3, 2, DATE('2019-07-21'), 'send_message'),
+  (3, 2, DATE('2019-07-21'), 'end_session'),
+  (4, 3, DATE('2019-06-25'), 'open_session'),
+  (4, 3, DATE('2019-06-25'), 'end_session');
+
+
+Query:
+-------
+SELECT
+  activity_date AS day,
+  COUNT(DISTINCT user_id) AS active_users
+FROM
+  pacific-ethos-441506-a1.sql_practice.Activity
+WHERE
+  activity_date BETWEEN DATE('2019-06-28')
+  AND DATE('2019-07-27')
+GROUP BY
+  1;

@@ -1,0 +1,119 @@
+++++++++++++++++++:
+6:05 PM 11.11.2024
+++++++++++++++++++:
+
+*******************:
+ GCP Data Engineer
+*******************:
+
+Session Title: Database Architecture and ACID Properties
+
+Session Duration: 1 Hour
+
+•	Topics Covered:
+    o	DBMS architecture and components.
+    o	ACID properties (Atomicity, Consistency, Isolation, Durability) and their importance in relational databases.
+    
+•	Objective: Understand database architecture and transaction handling.
+
+Recap:
+ - What is DATA, DATABASE, DBMS, RDBMS, SQL, No-SQL, Warehouse?
+ 
+Interview Questions:
+ - What are the other services you worked on from GCP Platform?:
+    - Cloud SQL, Cloud Functions and Datafusion
+    
+ - What is the difference between Cloud SQL and BigTable?:
+    - Both are  from the GCP Platform
+    - Both are useful Transactional Servers, in other words - both are OLTP Systems
+    - Cloud SQL is a RDBMS, BigTable supports No-SQL Database 
+   
+    
+1. DBMS architecture and components.:
+ - What is DBMS? 
+    - It is a software tool * 
+    - It is useful for creating Databases, Storing the data, Managing the Data and retriving Data.
+ 
+    
+Cars - Software - Travelling
+    - Seating - Arrangement
+    - Sedan(Model)
+    - Hatchback(Model)
+    
+Motors System  - Software Models
+    - Two People - Scooter, Mopid
+    - 5 - Cars
+    - More Than 5 - VAN
+    - > 20 - Bus
+    - 100 - Trains 
+    
+    
+    
+Extra Knowledge:
+    - Systems [Machine1 , Machine2] - Research - M --<>== MM
+    - Networks [Protocal]
+    - OSI Layers [Layers - based - Communication]
+    - Email Drop - Other Machine
+    - Phone - Receiver
+    
+    
+Student Database:
+    - Student
+    - Marks
+    - Couses
+    
+B.Tech - Gender Boy - 2023 - 3rd Semister
+
+select * from Students join Couses - where - cour - btech and gend - boy semdi - 3 year - 2023;
+
+SQL  - It communicates with the databases(MS) -- 
+
+Single- Tier Architecture:
+    - In the DBMS world, the one-tier Architecture is the simplest DBMS architecture, in which the client, server, and database are all on the same machine.
+    
+    - application dierectly interacts with the databases;
+
+
+One Tier DBMS Architecture is employed whenever:
+
+    - The data isn’t frequently updated.
+    - Multiple users aren’t accessing the database.
+    - A direct and simple method of modifying or accessing the database is required for application development.
+
+   
+Two-Tier Architecture:
+
+User interfaces and application programs are executed on the client side(local machine). 
+
+Query processing and transaction management are handled on the server side(Server Side).
+
+
+   
+Three-Tier Architecture:
+    
+ 
+Ref Link:
+https://www.interviewbit.com/blog/dbms-architecture/
+
+Minister(Self) - Single 
+
+Minister(server) - Common-Man(client) 
+
+Minister(server) - PA/OSD(middle) - Common-Man(Client) 
+
+DBMS - Core Components:
+    - Databse Engine: Manages the data storage, Process, Retrival - BigSize*
+    - Query Processor: SQL Commands can be interpreted 
+    - Transaction Manager: It ensures the data integrity and manges concurrent operations
+    - Storage Manager: Actually handles the data storage, structured organisation and indexing
+    - Buffer Manager: Temporarily storing the data in in-memory location - to speed up the data read and writes.
+
+
+*** - Bank Account: 101 - 10000 - netbanking - transfor a , atm - w , phone-pay - t  - transfor 
+
+
+Ref Link:
+https://databasetown.com/dbms-architecture/
+
+Assignment1:
+    - Local/Own Machine - mysql software installation(DBMS), mysql workbench installation(UI) - connect - select query run - Test

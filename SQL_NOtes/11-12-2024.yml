@@ -1,0 +1,176 @@
+*********:
+ GCP Data Engineer Course:
+*********: 
+--------------------------
+DATE - 7:40 AM 12/11/2024:
+--------------------------
+
+:SQL PRACTICE:
+
+
+SQL-Q3: Product Sales Analysis:
+
+
+Table: Sales
+
++-------------+-------+
+| Column Name | Type  |
++-------------+-------+
+| sale_id     | int   |UK
+| product_id  | int   |FK(relation)
+| year        | int   |UK
+| quantity    | int   |
+| price       | int   |
++-------------+-------+
+@ (sale_id, year) is the primary key (combination of columns with unique values) of this table.
+@ product_id is a foreign key (reference column) to Product table.
+@ Each row of this table shows a sale on the product product_id in a certain year.
+@ Note that the price is per unit. *total price for a specific sale_id -- quantity * price.
+ 
+2022:
+(sale_id, year)
+1,2022
+2,2022
+
+2023:
+(sale_id, year)
+1,2023
+2,2023
+
+
+
+Table: Product
+
++--------------+---------+
+| Column Name  | Type    |
++--------------+---------+
+| product_id   | int     |PK
+| product_name | varchar |
++--------------+---------+
+@ product_id is the primary key (column with unique values) of this table.
+@ Each row of this table indicates the product name of each product.
+ 
+
+Actuall Requirement:
+
+    * Write a solution to select the product id, year, quantity, and price for the first year of every product sold.
+    * 
+    * Return the resulting table in any order.
+    * 
+    * The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Sales table:
++---------+------------+------+----------+-------+
+| sale_id | product_id | year | quantity | price |
++---------+------------+------+----------+-------+ 
+| 1       | 100        | 2008 | 10       | 5000  |
+| 2       | 100        | 2008 | 15       | 5000  |
+| 3       | 100        | 2009 | 12       | 5000  |
+| 4       | 200        | 2009 | 12       | 5000  |
+| 7       | 200        | 2011 | 15       | 9000  |
++---------+------------+------+----------+-------+
+Product table:
++------------+--------------+
+| product_id | product_name |
++------------+--------------+
+| 100        | Nokia        |
+| 200        | Apple        |
+| 300        | Samsung      |
++------------+--------------+
+
+Note:
+
+When performing a join operation, it is important to note the following:
+
+The column names do not necessarily need to match for a join condition. For instance, one table might have a column named dept_id, while another table has d_id, department, or department_id.
+
+Additionally, if the data types of the columns differ (e.g., one column is a string, and the other is an integer), it is necessary to cast one of the columns to match the data type of the other. This ensures compatibility and avoids errors during the join operation. 
+
+Example Query:
+
+SELECT * 
+FROM table1 t1 
+JOIN table2 t2 
+ON CAST(t1.dept_id AS STRING) = t2.department_id;
+
+
+
+Output: 
++------------+------------+----------+-------+
+| product_id | first_year | quantity | price |
++------------+------------+----------+-------+ 
+| 100        | 2008       | 10       | 5000  |
+| 200        | 2011       | 15       | 9000  |
++------------+------------+----------+-------+
+
+
+CREATE TABLE SCRIPT:
+--------------------
+Create table If Not Exists Sales (
+    sale_id int, 
+    product_id int, 
+    year int, 
+    quantity int, 
+    price int
+    );
+    
+Create table If Not Exists Product (
+    product_id int, 
+    product_name string
+    );
+
+TRUNCATE TABLE SCRIPT:
+----------------------
+Truncate table Sales;
+
+INSERT INTO SCRIPT:
+-------------------
+
+insert into Sales (sale_id, product_id, year, quantity, price) values (1, 100, 2008, 10, 5000),
+                                                                       (2, 100, 2009, 12, 5000),
+                                                                       (7, 200, 2011, 15, 9000)
+
+TRUNCATE SCRIPT:
+----------------
+Truncate table Product;
+
+INSERT TABLE SCRIPT:
+---------------------
+
+insert into pacific-ethos-441506-a1.sql_practice.Product (product_id, product_name) values (100, 'Nokia') ,
+                                                      (200, 'Apple') ,
+                                                      (300, 'Samsung')
+                                                      
+                                                      
+                                                      
+                                                      
+Query development:
+-----------------
+S1: Inner join:
+
+SELECT 
+  T1.*,
+  T2.*
+FROM 
+pacific-ethos-441506-a1.sql_practice.Sales AS T1
+JOIN
+pacific-ethos-441506-a1.sql_practice.Product AS T2
+ON T1.PRODUCT_ID = T2.PRODUCT_ID
+
+S2: Selecting Required Columns:-- product id, year, quantity, and price
+
+SELECT 
+  T1.product_id as product_id,
+  T1.year as year,
+  T1.quantity as quantity,
+  T1.price as price 
+FROM 
+pacific-ethos-441506-a1.sql_practice.Sales AS T1
+JOIN
+pacific-ethos-441506-a1.sql_practice.Product AS T2
+ON T1.PRODUCT_ID = T2.PRODUCT_ID;

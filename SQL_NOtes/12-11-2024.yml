@@ -1,0 +1,129 @@
+++++++++++++++++++:
+7:45 AM 11.12.2024
+++++++++++++++++++:
+
+*******************:
+ GCP Data Engineer
+*******************:
+
+Morning Session: Data Modeling and Database Design Basics:
+
+•	Objective - Grasp the fundamentals of data modeling and database design.:
+
+    •	Topics Covered:
+        o	Entity-Relationship (ER) models, entities, attributes, and relationships.
+        o	Primary and foreign keys, unique constraints, and referential integrity.
+        o	Designing a simple ER model for a business case.
+    
+o	Hands-on: Create an ER model for a sample dataset.
+
+
+Explanation:
+------------
+Key-Words: 
+    - data modeling and database design[Data Storage System Related Design]
+    - RDBS, Warehouse - [No-SQL]
+    
+Topic 1:
+    - Entity-Relationship (ER) models, entities, attributes, and relationships.:
+    
+    
+Entity -- Entity --> Relation Establishment:
+
+What is an Entity?:
+
+Entity is a realtime objects involved in a business.
+
+An ER (Entity-Relationship) diagram is a flowchart that illustrates the entities and the relationship among them in any model. Software engineers use ER diagrams to design or debug relational databases. These models are best suited for research, data collection, and educational purposes.
+
+An ER diagram in a DBMS (Database Management system) is vital in designing a database for multiple businesses. It is a structural design of a system that engineers use to demonstrate the entities and their relationships in a database. Developers use these structures to form a database. So, it is crucial to create these diagrams before designing a database.
+
+
+# The data engineering roles mainly involve the desinging of database systems...
+
+What is an Attribute?:
+
+Attribute is a property or feature of an Entity.
+
+Part 2. Components of an ER Diagram:
+
+There are three essential components of an ER Diagram.
+
+1: Entities[Tables]
+    Types: 1. Entity 2. WeakEntity
+2: Attributes[Columns of that particular table]
+    Types:
+        1: Key [For unique identification of an Entity]
+        2. Composite [ firstname, lastname] --> Full_Name
+        3. Derivid - 1. Age Calculation - DOB - Basing on DOB attribute - you can generate the new attribute/column
+                     2. quantiy, price ---> derived attribute -> total (q * p)
+        4. Multi-valued - Arrays - [ list of phone-numbers]
+        
+3: Relationships[4types]
+    Types:
+        1. one to one - citizenship
+        2. one to many - pm to people - teacher to students
+        3. many to one 
+        4. many to many - group to group 
+        
+Part 4. ER Diagrams Symbols & Notations:
+Rectangle Shape: Entities [Customer]
+
+Double Regular Shape: Weak Entity [Department]
+
+Eclipse: Attribute [Customer_id, Cust_Name]
+
+Double Eclipse Shapes: Weak attribute [age - dob] - your main table is not having 
+
+Dotted Ellipse: derived Attribute [calculating the total from price and quantiy attributes]
+
+Diamond Shape: A diamond shape denotes a relationship between the entities.
+
+*********************************************
+ER diagram structure for a student database:
+*********************************************
+
+Entities and Attributes:
+
+E1:  Student(Real-Time Object(tangeble - intangble)
+
+Attributes: StudentID (Primary Key), FirstName, LastName, Email, Phone, DateOfBirth, Gender, Address
+
+Student1, Student2 - 
+
+E2: Course
+
+Attributes: CourseID (Primary Key), CourseName, CourseDescription, Credits
+
+E3: Instructor
+
+Attributes: InstructorID (Primary Key), FirstName, LastName, Email, Phone, Department
+
+E4: Enrollment
+
+Attributes: EnrollmentID (Primary Key), EnrollmentDate, Grade
+
+E5: Department
+
+Attributes: DepartmentID (Primary Key), DepartmentName, Location
+
+
+Questions:
+----------
+1. What is Data Engineering?:
+    - Design the systems*
+    - Collect the data/Extract the data
+    - Transform the data / Process The data
+    - Ingest the data / Load the Data 
+    - Reporting and Analytics
+
+
+Written-Test1:
+--------------
+1. Explain About ACID Properties(Paper):
+2. Hands-on: Create an ER model for a sample database:
+
+
+Assignment1:
+    - Local/Own Machine - mysql software installation(DBMS), mysql workbench installation(UI) - connect - select query run - Test:
+

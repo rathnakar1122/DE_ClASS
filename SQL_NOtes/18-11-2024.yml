@@ -1,0 +1,115 @@
+*************************:
+ GCP Data Engineer - Demo
+*************************: 
+
+Evening Session: Querying in MySQL, BigQuery, Redshift, RDS and Athena
+•	Objective: Learn SQL syntax variations across database systems.
+    •	Topics Covered:
+        o	Basic query differences among MySQL, BigQuery, Redshift, and Athena.
+        o	DDL operations and basic querying in these platforms.
+o	Hands-on: Practice basic queries in each system.
+
+
+BigQuery:
+---------
+@ is a EDW(Enterprise Data Warehouse) from GCP Platform:
+
+@ is a Serverless: 
+    - No need of installation, No need of infrastrucure creation and management
+    - We can simply focus wriring queries and doing analytics
+    
+@ Fully Managed Service from GCP:
+    - The udpatation and patch work is taken care by cloud provider
+    
+@ is a OLAP system:
+
+@ High Scalabiity:(Growing):
+    - Machines - Query Run [RDS, Cloud SQL, BigQuery, Redshift]
+    - 1kb - 100 boxes - 1 man - single day - 1$
+    - 1mb - 200 boxes - 2 men - single day
+    - 1gb - 2000 boxes- 20 men - single day - 20$
+    - 1tb
+    - 1pb 
+    
+  - 1gb RAM - 10 gb SSD -- cloud sql instance -[EP, E] --> [Production - Developement - Sandbox]
+  - 10 tb - 10Pb - We are ready - BigQuery - Consideration
+  - 1 kb - no issue - On Demand 
+  - It has got the tremandous engine which handels patabyte-scale datasets efficiently.
+  
+@ Standard SQL:Legacy SQL:
+  - 2009 - Spl SQL Query -- 
+  - Standard SQL Support -- ANSI SQL -- BigQuery SQL we call it...
+  - NEST is only in Legacy SQL and does not exist in Standard SQL.
+    ARRAY_AGG is only in Standard SQL and provides a more flexible, ANSI-compliant alternative.
+  - Developer Community is very high in number
+  - It is very easy syntax - 
+    
+@ Semaless Integration:Can be integrated with other gcp cloud services:
+  - Target --[BigQuery]
+  - Sea - All Streams, lakes, rivers - finally - sea end up
+  - BQ integrates with other GCP services easily -- Cloud Storage, Cloud Functions, PubSub, Dataflow, Dataproc 
+  
+@ Real-Time analytics:
+  - It supports streaming data insertions [PubSub]
+  - It process the near-real-time data and provides the analytics [PubSub]
+
+@ Bigquery ML:(Resources):
+  - It is one the BQ resources 
+  - BQ leverages the building and training ml models using sql queries
+  
+@ Data partitioning and Clustering:
+  - House Partions
+  - Refrigerater Partitions
+  - Data Partitions - Data storage - Tables - Split into partitions - segements - Spl storage - 
+    We call that storage - collasus - 
+  - It does the partitions basing Time Unit Columns - Date - OrderDate - CreationDate
+  - Select * from table wehre date = current_date-1;
+  - Clusterting is another feature which makes us sorting the data on using string Columns
+  - Select * from table where date = current_date-1 and name like '%raja%';
+  
+@ Federaterd Queries Support:
+  - Federated Country - We have all the individual states - CM 
+  - Collectively they are united and responsible for the central goverment --
+  - Cloud SQL Instance - Bigquery Data - Private IP - Selection
+  - You are in bigquery only - but you query the data from Cloud SQL instances[MySQL server]
+  - You can join the data from cloud sql instance of mysql with the data in BigQuery
+  - Even - Federated Query concepts extends the hand - like you can run the queries data stayed in the cloud storage -- directly -
+  - BigTable Support - 
+  
+@ Cost-Effective:
+  - Pay-as-you-go pricing model with on-demand queries or flat-rate pricing
+  - Auto-scaling - PB Data - no machines increase - query run -- 
+  - Cost Analysis -- 
+    -- Work --
+    -- 100 boxes - single day - 1 man -- 1 $
+    -- 200 boxes - double day - 1 man -- 2 $
+    -- 100 boxes - single day - 5 men -- 1 $ - Contract - 
+    -- 100 gb    - single day - 10 machines - 1$ - pay 
+    -- It does not focus on the no machines allocated to run that particular query 
+    -- It mainly focuses on the data how much the query is going to be scanned?
+    -- You are supposed to be least bothered about how many machines are allocated to finish your job.
+    -- Bigquery Charges the customer basing on the data scanned by that query --?
+    -- 1gb - 1$
+    -- 100 - 100 $
+    
+@ Security:
+    -- Cloud IAM
+    -- Data Encriptions
+    -- VPC
+
+
+# Use Cases:
+-------------
+
+
+
+
+    
+    
+    
+Questions:
+------------
+1. What is elasticity?
+2. What is scalability?
+3. What is the differences between elasticity and scalability?
+4. What are the types of Querys-Scans?
