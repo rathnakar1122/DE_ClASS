@@ -1,0 +1,273 @@
+--------------------------
+DATE - 8:15 AM 4,6/1/2025:
+-------------------------- 
+
+Aims:
+------
+UseCases:
+-----------
+1. Python UDFs to validate the bigquery table schema with the csv file placed in a gcs bucket
+2. Write a cloud run function to get the balance of a given customer from a bigquery table when make a request from a https request 
+
+
+
+import functions_framework
+from google.cloud import bigquery 
+
+@functions_framework.http
+def http_trigger(request):
+    request_json = request.get_json(silent=True)
+    request_args = request.args
+
+    if request_json and 'name' in request_json:
+        name = request_json['name']
+        return retrive_customer_info(name) # function calling statement
+    elif request_args and 'name' in request_args:
+        name = request_args['name']
+        return retrive_customer_info(name) # function calling statement
+    else:
+        name = 'OOOPS... YOU HAVE NOT PROVIDED ANY USER NAME'
+        return 'Hello {}!'.format(name)
+    
+def retrive_customer_info(name):
+    name = name
+    msg = 'I am done with printing'
+    # bigquery connction
+    client = bigquery.Client()
+    # Perform a query.
+    QUERY = "SELECT * FROM pacific-ethos-441506-a1.cnn_cps_raw_dataset.employee WHERE CustomerName = @FirstName;"
+    job_config = bigquery.QueryJobConfig(
+        query_parameters=[
+            bigquery.ScalarQueryParameter("FirstName", "STRING", FirstName)
+        ]
+    )
+    query_job = client.query(QUERY, job_config=job_config)  # API request
+    rows = query_job.result()  # Waits for query to finish
+
+    for row in rows:
+        print(row.FirstName)
+        return 'Hello {}!'.format(msg)
+    
+    
+    
+us-central1-docker.pkg.dev/pacific-ethos-441506-a1/gcf-artifacts
+    
+    
+    
+# How to get a single row/record of a customer from a bigquer table
+
+SELECT * FROM CUSTOMER WHERE CUSTOMER_NAME = ? (user input, system input)
+
+https://us-central1-pacific-ethos-441506-a1.cloudfunctions.net/first-function?name=Wolski
+
+
+
+BIGQUERY PARAMETERISED QUERY:
+------------------------------
+https://cloud.google.com/bigquery/docs/parameterized-queries#python_3
+
+
+
+Local Deployement:
+--------------------
+
+buildConfig:
+  automaticUpdatePolicy: {}
+  build: projects/393205678862/locations/us-central1/builds/2c06fc9c-65be-4672-bce8-f443fdfb7ea1
+  dockerRegistry: ARTIFACT_REGISTRY
+  dockerRepository: projects/pacific-ethos-441506-a1/locations/us-central1/repositories/gcf-artifacts
+  entryPoint: bq_table_data
+  runtime: python311
+  serviceAccount: projects/pacific-ethos-441506-a1/serviceAccounts/393205678862-compute@developer.gserviceaccount.com
+  source:
+    storageSource:
+      bucket: gcf-v2-sources-393205678862-us-central1
+      generation: '1736217676586079'
+      object: bqtowebpage/function-source.zip
+  sourceProvenance:
+    resolvedStorageSource:
+      bucket: gcf-v2-sources-393205678862-us-central1
+      generation: '1736217676586079'
+      object: bqtowebpage/function-source.zip
+createTime: '2025-01-07T02:41:16.839289140Z'
+environment: GEN_2
+labels:
+  deployment-tool: cli-gcloud
+name: projects/pacific-ethos-441506-a1/locations/us-central1/functions/bqtowebpage
+serviceConfig:
+  allTrafficOnLatestRevision: true
+  availableCpu: '0.1666'
+  availableMemory: 256M
+  environmentVariables:
+    LOG_EXECUTION_ID: 'true'
+  ingressSettings: ALLOW_ALL
+  maxInstanceCount: 6
+  maxInstanceRequestConcurrency: 1
+  revision: bqtowebpage-00001-tak
+  service: projects/pacific-ethos-441506-a1/locations/us-central1/services/bqtowebpage
+  serviceAccountEmail: 393205678862-compute@developer.gserviceaccount.com
+  timeoutSeconds: 300
+  uri: https://bqtowebpage-f7uukjuada-uc.a.run.app
+state: ACTIVE
+updateTime: '2025-01-07T02:42:09.904134756Z'
+url: https://us-central1-pacific-ethos-441506-a1.cloudfunctions.net/bqtowebpage?=name=Jhon
+
+https://www.flipkart.com/order_details?order_id=OD333301687827780100&
+
+
+https://www.flipkart.com/order_details?order_id=OD333301687827780100&item_id=333301687827780100&unit_id=333301687827780100000
+
+
+?order_id=OD333301687827780100&item_id=333301687827780100&unit_id=333301687827780100000
+
+3 parameters --> order_id, item_id, unit_id --> cloud functions/azure functions/lambda functions 
+        ---> serverless -- bigquery -- transanctional -- connect -- html language - converttion
+
+
+
+bq-to-webpage-crf:
+-------------------
+
+main.py
+
+
+import functions_framework
+from google.cloud import bigquery
+from flask import Response
+
+@functions_framework.http
+def bq_table_data(request):
+    request_json = request.get_json(silent=True)
+    request_args = request.args
+
+    if request_json and 'name' in request_json:
+        name = request_json['name']
+        return retrive_customer_info(name)
+    elif request_args and 'name' in request_args:
+        name = request_args['name']
+        return retrive_customer_info(name)
+    else:
+        name = 'OOOPS... YOU HAVE NOT PROVIDED ANY USER NAME'
+        return f'<p>Hello {name}!</p>'
+
+def retrive_customer_info(name):
+    # BigQuery connection
+    client = bigquery.Client()
+    QUERY = """
+        SELECT EmployeeID, FirstName, LastName, Email, PhoneNumber, JobTitle, Department, 
+               Salary, HireDate, ManagerID
+        FROM pacific-ethos-441506-a1.cnn_cps_raw_dataset.employee
+        WHERE FirstName = @FirstName;
+    """
+    job_config = bigquery.QueryJobConfig(
+        query_parameters=[
+            bigquery.ScalarQueryParameter("FirstName", "STRING", name)
+        ]
+    )
+    query_job = client.query(QUERY, job_config=job_config)  # API request
+    rows = query_job.result()  # Waits for query to finish
+
+    # Generate HTML response
+    html = """
+    <html>
+        <head>
+            <title>Customer Information</title>
+            <style>
+                table {
+                    width: 80%;
+                    border-collapse: collapse;
+                    margin: 20px auto;
+                    font-family: Arial, sans-serif;
+                }
+                th, td {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                    text-align: center;
+                }
+                th {
+                    background-color: #f4f4f4;
+                    font-weight: bold;
+                }
+                tr:nth-child(even) {
+                    background-color: #f9f9f9;
+                }
+            </style>
+        </head>
+        <body>
+            <h2 style="text-align:center;">Customer Information</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>EmployeeID</th>
+                        <th>FirstName</th>
+                        <th>LastName</th>
+                        <th>Email</th>
+                        <th>PhoneNumber</th>
+                        <th>JobTitle</th>
+                        <th>Department</th>
+                        <th>Salary</th>
+                        <th>HireDate</th>
+                        <th>ManagerID</th>
+                    </tr>
+                </thead>
+                <tbody>
+    """
+
+    # Append rows to the table
+    for row in rows:
+        html += f"""
+        <tr>
+            <td>{row.EmployeeID}</td>
+            <td>{row.FirstName}</td>
+            <td>{row.LastName}</td>
+            <td>{row.Email}</td>
+            <td>{row.PhoneNumber}</td>
+            <td>{row.JobTitle}</td>
+            <td>{row.Department}</td>
+            <td>{row.Salary}</td>
+            <td>{row.HireDate}</td>
+            <td>{row.ManagerID}</td>
+        </tr>
+        """
+
+    html += """
+                </tbody>
+            </table>
+        </body>
+    </html>
+    """
+
+    return Response(html, content_type='text/html')
+
+
+
+requirements.txt
+google-cloud-bigquery
+flask
+functions-framework
+
+readme.md
+
+gcloud functions deploy bqtowebpage 
+    --runtime python311 
+    --trigger-http 
+    --allow-unauthenticated 
+    --timeout 300 
+    --entry-point bq_table_data  
+    
+    
+Questions:
+----------
+1. What is a CRF?
+2. How many generation are there in CRF service?
+3. What types trigger mechanisms are available with CRFs?
+4. Can we deploy a CRF in multi-Zone?
+5. What is the default memory allocation for CRFs if it a HTTPS request?
+6. What is the back-end that takes care of executing your CRF on GCP Platform?
+7. What is Cloud RUN?
+8. What is a container?
+9. What is an Artifact Regitry?
+10. Are you running your cloud function using gen1 or gen2?
+11. What is authenticated and what is unauthenticated trigger for HTTPS funciton?
+12. What is ingris? What is egris?
+13. What are the two main files important to write a CRF?
